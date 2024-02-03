@@ -6,8 +6,8 @@ import UserRouter from './src/features/user/user.routes.js';
 
 server.use(bodyParser.json());
 
-server.use('/api/products',ProductRouter);
-server.use('/api/users',UserRouter);
+server.use('/api/product',ProductRouter);
+server.use('/api/user',UserRouter);
 
 server.get('/',(req, res)=>{
     res.send("Welcome to e-commerce website");

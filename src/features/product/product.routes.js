@@ -1,4 +1,4 @@
-// Manage the paths to the product controller
+//product
 
 import express from 'express'
 import ProductController from './product.controller.js';
@@ -7,14 +7,15 @@ import basicAuth from '../../middlewares/basic-auth.middleware.js';
 
 const router = express.Router();
 
-
 const productController = new ProductController();
 
-router.get('/', basicAuth, productController.getAllProduct);
-router.post('/', basicAuth, upload.single('imageUrl'),productController.addProduct);
+router.use(basicAuth);
 
-router.get('/getone/:id', basicAuth, productController.getOneProduct);
+router.get('/', productController.getAllProduct);
+router.post('/', upload.single('imageUrl'),productController.addProduct);
 
-router.get('/filter', basicAuth, productController.filterProducts);
+router.get('/getone/:id', productController.getOneProduct);
+
+router.get('/filter', productController.filterProducts);
 
 export default router;
