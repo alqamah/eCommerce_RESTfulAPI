@@ -39,7 +39,7 @@ export default class ProductModel{
     }
 }
 
-var products = [
+let products = [
     new ProductModel(1, "testName", "testDesc", "testImageUrl", "testCategory", 100, ["small", "medium", "large"]),
     new ProductModel(2, "testName2", "testDesc2", "testImageUrl2", "testCategory2", 200, []),
 ];

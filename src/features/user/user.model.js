@@ -28,5 +28,11 @@ var users = [
         email: "user1@gmail.com",
         password: "PASSWORD",
         userType: "seller"
+    },
+    {
+        name: "Alqama",
+        email: "alqama.hasnain@gmail.com",
+        password: "pass",
+        userType: "admin"
     }
 ]
