@@ -11,10 +11,10 @@ const router = express.Router();
 const productController = new ProductController();
 
 router.get('/', basicAuth, productController.getAllProduct);
-router.post('/', upload.single('imageUrl'),productController.addProduct);
+router.post('/', basicAuth, upload.single('imageUrl'),productController.addProduct);
 
-router.get('/getone/:id', productController.getOneProduct);
+router.get('/getone/:id', basicAuth, productController.getOneProduct);
 
-router.get('/filter',productController.filterProducts);
+router.get('/filter', basicAuth, productController.filterProducts);
 
 export default router;
