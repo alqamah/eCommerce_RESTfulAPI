@@ -1,6 +1,15 @@
-ProductController{
-    Get Products
-    Add a Product
-    Get one Product
+ProductController {
+    Get Products ✓
+    Add a Product ✓
+    Get one Product ✓
+    Filter Product ✓
     Rate Product
+    Add items to a cart
+    Remove items from a cart
 }
+
+UserController {
+    Sign-up -Email, Name, Password, TypeOfUser(customer, seller)
+    Sign-in
+}
+

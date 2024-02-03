@@ -1,11 +1,13 @@
 import express from 'express';
-import * as ProductRouter from './src/features/product/product.routes.js'
-
+import bodyParser from 'body-parser';
 const server = express();
+import ProductRouter from './src/features/product/product.routes.js';
+import UserRouter from './src/features/user/user.routes.js';
 
-//for all routes related to products, redirect to product routes:
-//use url/api/ as it's a good practice
+server.use(bodyParser.json());
+
 server.use('/api/products',ProductRouter);
+server.use('/api/users',UserRouter);
 
 server.get('/',(req, res)=>{
     res.send("Welcome to e-commerce website");
