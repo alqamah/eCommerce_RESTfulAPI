@@ -25,10 +25,8 @@ export default class UserController {
         const token = jwt.sign(
             {email: user.email}, //payload
             "secretkey", //signature
-            {expiresIn: '1h'} //options
         )
-        
-        console.log(token);
+        res.cookie('jwtToken',token);
         return  res.status(201).send("User signed in successfully");
     }
 }

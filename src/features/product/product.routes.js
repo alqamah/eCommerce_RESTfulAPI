@@ -20,4 +20,6 @@ router.get('/getone/:id', productController.getOneProduct);
 
 router.get('/filter', productController.filterProducts);
 
+router.get('/rating', productController.rateProduct);
+
 export default router;
