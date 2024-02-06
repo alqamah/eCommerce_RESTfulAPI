@@ -11,5 +11,6 @@ const cartController = new CartItemsController();
 //router.use(jwtAuth);
 router.get('/', cartController.get);
 router.post('/', cartController.add);
+router.delete('/', cartController.delete);
 
 export default router;

@@ -26,5 +26,15 @@ export default class CartItemsController {
         else   
             return res.send({msg:"no items"});
     }
+
+    delete(req, res){
+        const uid = req.cookies.userId;
+        const pid = req.body.productId;
+        const result = cartModel.delete(uid,pid);
+        if(result)
+            return res.status(200).send({msg:"deleted successfully"});
+        else
+            return res.status(404).send({msg:"product not found"});
+    }
     
 }
