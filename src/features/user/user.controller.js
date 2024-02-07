@@ -27,7 +27,6 @@ export default class UserController {
             "secretkey", //signature
         )
         res.cookie('jwtToken',token);
-        res.cookie('userId',user.id);
         return  res.status(201).send("User signed in successfully");
     }
 }

@@ -5,9 +5,19 @@
         "description": "api for ecom app",
         "title": "E-commerce API"
     },
-    "host":"localhost:3000",
+    "servers":{
+        "url":"localhost:3000"
+    },
+    "securityDefinitions":{
+        "JWT":{
+            "in":"cookies",
+            "name":"jwtToken",
+            "type":"apiKey"
+        }
+    },
     "paths": {
         "/api/user/register":{
+            "tags":"users",
             "post":{
                 "summary":"Sign up",
                 "description":"Creates new user account",
@@ -38,6 +48,99 @@
                     }
                 }
             }
+        },
+        "/api/user/login":{
+            "post":{
+                "summary":"Sign in",
+                "description":"Logs in existing user",
+                "parameters":[
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "description":"User Credentials",
+                        "schema":{ 
+                            "type":"object",
+                             "properties":{
+                                "email":{
+                                    "type":"string"
+                                },
+                                "password":{
+                                    "type":"string"
+                                }
+                             }
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"Incorrect Credentials"
+                    }
+                }
+            }
+        },
+        "/api/product/":{
+            "tags":"products",
+            "get":{
+                "summary":"all products",
+                "description":"displays all the products",
+                "security":[
+                    {"JWT":{}}
+                ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "404":{
+                        "description":"No records"
+                    }
+                }
+            },
+            "post":{
+                "summary":"Add product",
+                "description":"Adds a new product",
+                "security":[
+                    {"JWT":{}}
+                ],
+                "parameters":[
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "description":"Product Details",
+                        "schema":{ 
+                            "type":"object",
+                             "properties":{
+                                "name":{
+                                    "type":"string"
+                                },
+                                "desc":{
+                                    "type":"string"
+                                },
+                                "imageUrl":{
+                                    "type":"string"
+                                },
+                                "price":{
+                                    "type":"number"
+                                },
+                                "sizes":{
+                                    "type":"array"
+                                }
+                             }
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"OK"
+                    },
+                    "400":{
+                        "description":"Incorrect Credentials"
+                    }
+                }
+            }
         }
+        
     }
 }
