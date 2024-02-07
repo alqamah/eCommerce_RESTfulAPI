@@ -22,9 +22,9 @@ export default class CartItemsController {
     get (req, res) {
         const result = cartModel.get(req.cookies.userId);
         if(result)
-            return res.send(result);
+            return res.status(200).send(result);
         else   
-            return res.send({msg:"no items"});
+            return res.status(404).send({msg:"no items"});
     }
 
     delete(req, res){
