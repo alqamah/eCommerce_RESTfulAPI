@@ -8,6 +8,7 @@ import apiDocs from './swagger.json' assert {type:'json'};
 import CartRouter from './src/features/cart/cart.routes.js'
 import ProductRouter from './src/features/product/product.routes.js';
 import UserRouter from './src/features/user/user.routes.js';
+import loggerMiddleware from './src/middlewares/logger.middleware.js';
 
 const server = express();
 
@@ -15,8 +16,12 @@ server.use(cors());
 
 server.use('/api-docs', swagger.serve, swagger.setup(apiDocs));
 
+
 server.use(bodyParser.json());
 server.use(cookieParser());
+
+server.use(loggerMiddleware);
+
 
 server.use('/api/product',ProductRouter);
 server.use('/api/user',UserRouter);
