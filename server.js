@@ -8,7 +8,8 @@ import apiDocs from './swagger.json' assert {type:'json'};
 import CartRouter from './src/features/cart/cart.routes.js'
 import ProductRouter from './src/features/product/product.routes.js';
 import UserRouter from './src/features/user/user.routes.js';
-import loggerMiddleware from './src/middlewares/logger.middleware.js';
+//import loggerMiddleware from './src/middlewares/logger.middleware.js';
+import loggerMiddleware from './src/middlewares/winston-logger.middleware.js';
 
 const server = express();
 

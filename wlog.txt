@@ -1,0 +1,2 @@
+{"level":"info","message":"/login - {\"name\":\"alqama\",\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}
+{"level":"info","message":"/api/user/register - {\"name\":\"alqama\",\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}
