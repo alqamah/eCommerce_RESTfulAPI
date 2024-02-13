@@ -13,7 +13,7 @@ const jwtAuth = (req, res, next) =>{
     try{
         const payload = jwt.verify(
             jwtToken,
-            'secretkey',
+            'secretkey',    
         );
     }catch(err){
         return res.status(401).send({msg:"unauthorised access"});

@@ -24,8 +24,12 @@ export default class ProductController{
         const userId = req.query.uid;
         const productId = req.query.pid;
         const rating = req.query.r;
-        const result = ProductModel.rateProduct(userId, productId, rating);
-        return res.send({msg:result});
+        try{
+            const result = ProductModel.rateProduct(userId, productId, rating);
+        }catch(err){
+            return res.status(400).send(err.message);
+        }
+        return res.status(201).send({msg:result});
     }
     
     getOneProduct(req, res){

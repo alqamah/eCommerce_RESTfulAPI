@@ -28,6 +28,15 @@ server.use('/api/product',ProductRouter);
 server.use('/api/user',UserRouter);
 server.use('/api/cart',CartRouter);
 
+server.use((err,req,res,next)=>{
+    console.log(err);
+    res.status(503).send("server-side error");
+});
+
+server.use('/',(req,res)=>{
+    res.send("Welcome to the ecom app");
+});
+
 server.get('/',(req, res)=>{
     res.send("Welcome to e-commerce website");
 });
