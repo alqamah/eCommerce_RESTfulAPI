@@ -1,3 +1,5 @@
+import { getDb } from "../../config/mongodb.js";
+
 export class UserModel{
     constructor(name, email, password, userType){
         this.name = name;
@@ -5,18 +7,25 @@ export class UserModel{
         this.password = password;
         this.userType = userType;
     }
-
-    static signup(user){
-        const newUser = new UserModel(user.name, user.email, user.password, user.userType);
-        newUser.id = users.length + 1;
-        users.push(newUser);    
-    }
-
+    
+    // static async signup(user){
+    //     try{
+    //         const db = getDb(); //gives access to the db
+    //         const usersCollection = db.collection("users"); //gets the users collection/table
+    //         const newUser = new UserModel(user.name, user.email, user.password, user.userType);
+    //         await usersCollection.insertOne(newUser); //adds record to the users collection
+    //         users.push(newUser);
+    //         return newUser;
+    //     }catch(err){
+    //         console.log(err);
+    //     }
+    // }
+    
     static signin(email, password){
         const user = users.find(user => user.email == email && user.password == password);
         return user;
     }
-
+    
     static getAll(){   
         return users;
     }

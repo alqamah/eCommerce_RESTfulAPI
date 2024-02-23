@@ -11,6 +11,8 @@ import UserRouter from './src/features/user/user.routes.js';
 //import loggerMiddleware from './src/middlewares/logger.middleware.js';
 import loggerMiddleware from './src/middlewares/winston-logger.middleware.js';
 
+import {mongoDbConnection} from './src/config/mongodb.js';
+
 const server = express();
 
 server.use(cors());
@@ -28,23 +30,21 @@ server.use('/api/product',ProductRouter);
 server.use('/api/user',UserRouter);
 server.use('/api/cart',CartRouter);
 
-server.use((err,req,res,next)=>{
-    console.log(err);
-    res.status(503).send("server-side error");
-});
 
-server.use('/',(req,res)=>{
-    res.send("Welcome to the ecom app");
-});
 
-server.get('/',(req, res)=>{
-    res.send("Welcome to e-commerce website");
-});
+// server.use('/',(req,res)=>{
+//     res.send("Welcome to the ecom app");
+// });
 
-server.use((req,res)=>{
-    res.status(404).send("Error 404. This route does not exist");
-});
+// server.get('/',(req, res)=>{
+//     res.send("Welcome to e-commerce website");
+// });
+
+// server.use((req,res)=>{
+//     res.status(404).send("Error 404. This route does not exist");
+// });
 
 server.listen(3000, ()=>{
     console.log('server listening on port 3000...');
+    mongoDbConnection();
 });

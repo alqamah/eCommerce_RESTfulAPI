@@ -5,3 +5,20 @@
 {"level":"info","message":"/api/user/register - {\"name\":\"alqama\",\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}
 {"level":"info","message":"/login - {\"name\":\"alqama\",\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}
 {"level":"info","message":"/api/product - {\"name\":\"alqama\",\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}
+{"level":"info","message":"/login - {\"email\":\"user1@gmail.com\",\"password\":\"PASSWORD\"}\n","service":"request-logging"}
+{"level":"info","message":"/login - {\"email\":\"user1@gmail.com\",\"password\":\"PASSWORD\"}\n","service":"request-logging"}
+{"level":"info","message":"/login - {\"email\":\"user1@gmail.com\",\"password\":\"PASSWORD\"}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/ - {}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/ - {}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/ - {}\n","service":"request-logging"}
+{"level":"info","message":"/api/user/register - {}\n","service":"request-logging"}
+{"level":"info","message":"/api/user/register - {\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}
+{"level":"info","message":"/api/user/register - {\"name\":\"Alqama\",\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}
+{"level":"info","message":"/api/user/register - {\"name\":\"Alqama\",\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}
+{"level":"info","message":"/api/confessions/ - {\"title\":\"sample title\",\"body\":\"This is a sample body\",\"author\":\"John Doe\"}\n","service":"request-logging"}
+{"level":"info","message":"/api/confessions/ - {\"title\":\"sample title\",\"body\":\"This is a sample body\",\"author\":\"John Doe\"}\n","service":"request-logging"}
+{"level":"info","message":"/api/user/register - {\"name\":\"Alqama\",\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}
+{"level":"info","message":"/api/user/register - {\"name\":\"Alqama\",\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}
+{"level":"info","message":"/api/user/register - {\"name\":\"Alqama\",\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}
+{"level":"info","message":"/api/user/register - {\"name\":\"Alqama\",\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}
+{"level":"info","message":"/api/user/register - {\"name\":\"Alqama\",\"email\":\"alqama.hasnain@gmail.com\",\"password\":\"pass\"}\n","service":"request-logging"}

@@ -9,7 +9,7 @@ import jwtAuth from '../../middlewares/jwt-auth.middleware.js';
 const router = express.Router();
 
 const productController = new ProductController();
-
+//product
 //router.use(basicAuth);
 router.use(jwtAuth);
 

@@ -1,7 +1,11 @@
 import { UserModel } from "./user.model.js";
 import jwt from "jsonwebtoken";
+import  {UserRepository}  from "./user.repository.js";
 
 export default class UserController {
+    constructor() {
+        this.userRepository = new UserRepository();
+    }
     getAll(req,res){
         if(req.query.pass == 'alqama'){
 
@@ -11,9 +15,19 @@ export default class UserController {
         }
     }
 
-    signUp(req, res) {  
-        UserModel.signup(req.body);
-        res.status(201).send("User created successfully");
+    async signUp(req, res) {  
+        // try{
+        //     const result = await UserModel.signup(req.body);
+        //     if(result)
+        //         return res.status(201).send(result);
+        // }catch(err){
+        //     console.log(err);
+        //     return res.status(400).send("Error");
+        // } 
+        const {name, email, password, userType} = req.body;
+        const user = new UserModel(name, email, password, userType);
+        await this.userRepository.signUp(user);
+        res.status(201).send(user);
     }
 
     signIn(req, res) {
