@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from 'cors';
 import swagger from 'swagger-ui-express';
 import apiDocs from './swagger.json' assert {type:'json'};
+import dotenv from 'dotenv';
 
 import CartRouter from './src/features/cart/cart.routes.js'
 import ProductRouter from './src/features/product/product.routes.js';
@@ -14,6 +15,7 @@ import loggerMiddleware from './src/middlewares/winston-logger.middleware.js';
 import {mongoDbConnection} from './src/config/mongodb.js';
 
 const server = express();
+dotenv.config(); // load the environment variables from the.env file
 
 server.use(cors());
 

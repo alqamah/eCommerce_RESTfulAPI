@@ -4,7 +4,7 @@ const jwtAuth = (req, res, next) =>{
 
     //1.) Read the token
     // const jwtToken = req.headers["authorization"];
-    console.log(req.cookies);
+    //console.log(req.cookies);
     const jwtToken = req.cookies.jwtToken;
     if(!jwtToken)
         return res.status(401).send({msg:"unauthorised acces"});
@@ -13,7 +13,7 @@ const jwtAuth = (req, res, next) =>{
     try{
         const payload = jwt.verify(
             jwtToken,
-            'secretkey',    
+            process.env.JWT_SECRET_KEY,   
         );
     }catch(err){
         return res.status(401).send({msg:"unauthorised access"});

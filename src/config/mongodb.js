@@ -1,6 +1,9 @@
 import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
 
-const url = "mongodb://localhost:27017";
+dotenv.config();
+
+const url = process.env.DB_URL; //from .env file
 
 let client;
 //creating a connection 

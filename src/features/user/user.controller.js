@@ -20,6 +20,8 @@ export default class UserController {
         const {name, email, password, userType} = req.body;
         const hashedPassword = await bcrypt.hash(password, 10); //plain-text-pwd, salt-rounds(10 - 20)
         const user = new UserModel(name, email, hashedPassword, userType);
+        if(await this.userRepository.findByEmail(email))
+            return res.status(401).send("Email already exists");
         await this.userRepository.signUp(user);
         res.status(201).send(user);
     }
@@ -32,15 +34,14 @@ export default class UserController {
                 return res.status(401).send("Invalid email or password");
             else{
                 const isPasswordMatch = await bcrypt.compare(password, result.password);
-                console.log(isPasswordMatch);
                 if (!isPasswordMatch)
                     return res.status(401).send("Invalid email or password");
                 const token = jwt.sign(
                     {email: result.email}, //payload
-                    "secretkey", //signature
+                    process.env.JWT_SECRET_KEY, //signature
                     )
                 res.cookie('jwtToken',token);
-                return  res.status(201).send(token);
+                return  res.status(201).send("user signed in successfully");
             }
         }catch(err){
             console.log(err);

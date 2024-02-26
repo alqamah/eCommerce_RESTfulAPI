@@ -13,12 +13,18 @@ const productController = new ProductController();
 //router.use(basicAuth);
 router.use(jwtAuth);
 
-router.get('/', productController.getAllProduct);
-router.post('/', upload.single('imageUrl'),productController.addProduct);
-
-router.get('/getone/:id', productController.getOneProduct);
-
-router.get('/filter', productController.filterProducts);
+router.get('/', (req,res)=>{
+    productController.getAllProduct(req,res);
+});
+router.post('/', upload.single('imageUrl'),(req,res)=>{
+    productController.addProduct(req,res);
+});
+router.get('/getone/:name', (req,res)=>{
+    productController.getOneProduct(req,res);
+});
+router.get('/filter',(req,res)=>{ 
+    productController.filterProducts(req,res);
+});
 
 router.post('/rating', productController.rateProduct);
 
