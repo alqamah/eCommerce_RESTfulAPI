@@ -1,6 +1,6 @@
 import { getDb } from "../../config/mongodb.js";
 
-export class UserRepository { 
+export default class UserRepository { 
     async signUp(newUser){
         try{
             const db = getDb(); //gives access to the db
@@ -11,4 +11,15 @@ export class UserRepository {
             console.log(err);
         }
     }
+
+    async findByEmail(email) {
+        try{
+            const db = getDb();
+            const collection = db.collection("users");
+            const result = await collection.findOne({email});
+            return result;
+        } catch(err){
+            console.log(err);
+        }
+      }
 }

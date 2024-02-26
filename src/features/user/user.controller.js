@@ -1,6 +1,7 @@
 import { UserModel } from "./user.model.js";
 import jwt from "jsonwebtoken";
-import  {UserRepository}  from "./user.repository.js";
+import  UserRepository  from "./user.repository.js";
+import bcrypt from "bcrypt";
 
 export default class UserController {
     constructor() {
@@ -8,39 +9,43 @@ export default class UserController {
     }
     getAll(req,res){
         if(req.query.pass == 'alqama'){
-
+            
             return res.status(200).send(UserModel.getAll());
         }else{
             return res.status(401).send("Unauthorized");    
         }
     }
-
+    
     async signUp(req, res) {  
-        // try{
-        //     const result = await UserModel.signup(req.body);
-        //     if(result)
-        //         return res.status(201).send(result);
-        // }catch(err){
-        //     console.log(err);
-        //     return res.status(400).send("Error");
-        // } 
         const {name, email, password, userType} = req.body;
-        const user = new UserModel(name, email, password, userType);
+        const hashedPassword = await bcrypt.hash(password, 10); //plain-text-pwd, salt-rounds(10 - 20)
+        const user = new UserModel(name, email, hashedPassword, userType);
         await this.userRepository.signUp(user);
         res.status(201).send(user);
     }
-
-    signIn(req, res) {
-        const user = UserModel.signin(req.body.email, req.body.password);
-        if(!user)
-            res.status(401).send("Invalid email or password");  
-        
-        //1. create a token 
-        const token = jwt.sign(
-            {email: user.email}, //payload
-            "secretkey", //signature
-        )
-        res.cookie('jwtToken',token);
-        return  res.status(201).send("User signed in successfully");
+    
+    async signIn(req, res) {
+        try{
+            const {email, password} = req.body;
+            const result = await this.userRepository.findByEmail(email);
+            if(!result)
+                return res.status(401).send("Invalid email or password");
+            else{
+                const isPasswordMatch = await bcrypt.compare(password, result.password);
+                console.log(isPasswordMatch);
+                if (!isPasswordMatch)
+                    return res.status(401).send("Invalid email or password");
+                const token = jwt.sign(
+                    {email: result.email}, //payload
+                    "secretkey", //signature
+                    )
+                res.cookie('jwtToken',token);
+                return  res.status(201).send(token);
+            }
+        }catch(err){
+            console.log(err);
+        }
     }
 }
+
+
