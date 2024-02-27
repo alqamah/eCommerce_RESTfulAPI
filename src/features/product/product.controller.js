@@ -31,24 +31,25 @@ export default class ProductController{
     }
 
     async getOneProduct(req, res){
-        const name = req.params.name;
-        const product = await this.productRepository.getProductById(name);
+        const pid = req.params.pid;
+        const product = await this.productRepository.getProductById(pid);
         if(product)
             res.status(201).send(product);
         else
             res.status(404).send("Product Not Found!");
     }
     
-    rateProduct(req, res){
+    async rateProduct(req, res){
         const userId = req.query.uid;
         const productId = req.query.pid;
         const rating = req.query.r;
         try{
-            const result = ProductModel.rateProduct(userId, productId, rating);
+            const result = await this.productRepository.rateProduct(userId,productId,rating);
+            console.log(result);
+            res.status(201).send(result);
         }catch(err){
             return res.status(400).send(err.message);
         }
-        return res.status(201).send({msg:result});
     }
     
     
