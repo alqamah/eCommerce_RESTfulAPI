@@ -40,7 +40,10 @@ export default class ProductController{
     }
     
     async rateProduct(req, res){
-        const userId = req.query.uid;
+        const userId = req.cookies.uid;
+        if(!userId){
+            return res.status(401).send("Unauthorized");
+        }
         const productId = req.query.pid;
         const rating = req.query.r;
         try{

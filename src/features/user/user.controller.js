@@ -37,10 +37,12 @@ export default class UserController {
                 if (!isPasswordMatch)
                     return res.status(401).send("Invalid email or password");
                 const token = jwt.sign(
-                    {email: result.email}, //payload
-                    process.env.JWT_SECRET_KEY, //signature
-                    )
+                    {email: result.email},
+                    process.env.JWT_SECRET_KEY, 
+                    { expiresIn: '1h' }
+                );
                 res.cookie('jwtToken',token);
+                res.cookie('uid',result._id); 
                 return  res.status(201).send("user signed in successfully");
             }
         }catch(err){
