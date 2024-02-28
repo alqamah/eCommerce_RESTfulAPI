@@ -24,7 +24,7 @@ export default class cartModel {
 //     static delete(userId, productId){
 //         const ind = cartItems.findIndex(el => el.userId == userId && el.productId == productId)
 //         if(ind==-1)
-//             return false;
+//             return false;~
 //         cartItems.splice(ind,1);
 //         console.log(cartItems);
 //         return true;
