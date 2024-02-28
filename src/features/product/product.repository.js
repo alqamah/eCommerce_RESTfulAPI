@@ -70,13 +70,13 @@ export class ProductRepository {
       if(product){
         if(!product.ratings){ //if ratings [] does not exist
           product.ratings = []; //then create the ratings array
-          product.ratings.push({userId: userId, rating: rating}); //push the rating
+          product.ratings.push({userId: new ObjectId(userId), rating: rating}); //push the rating
         }
         const ratingInd = product.ratings.findIndex((r) => r.userId == userId); //search for the rating of the user
         if(ratingInd!= -1) //if user has already rated this product
           product.ratings[ratingInd].rating = rating; //update the rating
         else
-          product.ratings.push({userId: userId, rating: rating}); //push the new or updated rating
+          product.ratings.push({userId: new ObjectId(userId), rating: rating}); //push the rating
         const upd = await collection.updateOne({ //update the product in the database
           _id: new ObjectId(productId)
         },{
@@ -113,5 +113,31 @@ export class ProductRepository {
       };
     }
   }
+
+  /*
+  async rate(userId, productId, rate){
+    try{
+      const db = getDb();
+      const collection = db.collection("products");
+      //1. Removes the existing entry
+      await collection.updateOne({
+        _id: new ObjectId(productId)
+      },
+      {
+        $pull:{ratings:{userId: new ObjectId(userId)}}
+      })
+      //2. Pushes the new entry
+      await collection.updateOne({
+        _id: new ObjectId(productId)
+      },
+      {
+        $push:{rating:{userId:new ObjectId(userId), rating}}
+      })
+    }catch(err){
+      console.log(err);
+    }
+  }
+  */
+  
 }
     

@@ -32,7 +32,7 @@ export default class cartModel {
 }
 
 var cartItems = [
-    //uid, pid, qty, id
+    //uid, pid, qty, id (cart)
     new cartModel(1,3,2,1),
     new cartModel(2,1,2,2),
     new cartModel(2,2,2,3)
