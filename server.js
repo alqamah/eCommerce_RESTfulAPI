@@ -6,7 +6,7 @@ import swagger from 'swagger-ui-express';
 import apiDocs from './swagger.json' assert {type:'json'};
 import dotenv from 'dotenv';
 
-import CartRouter from './src/features/cart/cart.routes.js'
+import cartRouter from './src/features/cart/cartItems.routes.js';
 import ProductRouter from './src/features/product/product.routes.js';
 import UserRouter from './src/features/user/user.routes.js';
 //import loggerMiddleware from './src/middlewares/logger.middleware.js';
@@ -30,7 +30,7 @@ server.use(loggerMiddleware);
 
 server.use('/api/product',ProductRouter);
 server.use('/api/user',UserRouter);
-server.use('/api/cart',CartRouter);
+server.use('/api/cart',cartRouter);
 
 
 
