@@ -7,27 +7,50 @@ export default class CartItemsRepository{
     }
 
 
+    // async add(productID, userID, quantity){
+    //     try{
+    //     const db = getDb();
+    //     const collection = db.collection(this.collection);
+    //     const id = this.getNextCounterValue(db);
+    //     await collection.insertOne(
+    //             {productID: new ObjectId(productID), userID: new ObjectId(userID), quantity}, //filter expression
+    //             {
+    //                 $setOnInsert:{
+    //                     _id: id
+    //                 }, //inserts/sets value only when document does not exist.
+    //                 $inc:{ //increment operator
+    //                     quantity: quantity
+    //                 }
+    //             }, 
+    //             {upsert: true} //upsert: if document exists, then update it, else create it. 
+    //             ) 
+
+    //     }catch(err){
+    //         console.log(err);
+    //         //throw new ApplicationError("Something went wrong with database", 500);
+    //     }
+    // }
+
     async add(productID, userID, quantity){
         try{
-        const db = getDb();
-        const collection = db.collection(this.collection);
-        // let product = await collection.findOne({productID: new ObjectId(productID), userID: new ObjectId(userID)});
-        // if(product){
-        //     await collection.updateOne({_id: product._id}, { $set: { quantity: product.quantity + quantity } });
-        // }else{
-        //     await collection.insertOne({productID: new ObjectId(productID), userID: new ObjectId(userID), quantity}) 
-        // } //or we can use the following function:
-            await collection.insertOne(
-                {productID: new ObjectId(productID), userID: new ObjectId(userID), quantity}, //filter expression
-                {$inc:{ //increment operator
+            const db = getDb();
+            const collection = db.collection(this.collection)
+            //const id = await this.getNextCounter(db);
+            // find the document
+            // either insert or update
+            // Insertion.
+            await collection.updateOne(
+                {productID:new ObjectId(productID), userID:new ObjectId(userID)},
+                {
+                    //$setOnInsert: {_id:id},
+                    $inc:{
                     quantity: quantity
-                }}, 
-                {upsert: true} //upsert: if document exists, then update it, else create it. 
-                ) 
+                }},
+                {upsert: true})
 
         }catch(err){
             console.log(err);
-            //throw new ApplicationError("Something went wrong with database", 500);
+            //throw new ApplicationError("Something went wrong with database", 500);    
         }
     }
 
@@ -53,4 +76,15 @@ export default class CartItemsRepository{
             //throw new ApplicationError("Something went wrong with database", 500);
         }
     }
+
+    // async getNextCounter(db){
+
+    //     const resultDocument = await db.collection("counters").findOneAndUpdate(
+    //         {_id:'cartItemId'},
+    //         {$inc:{value: 1}},
+    //         {returnDocument:'after'}
+    //     )  
+    //     console.log(resultDocument);
+    //     return resultDocument.value;
+    // }
 }
