@@ -6,31 +6,6 @@ export default class CartItemsRepository{
         this.collection = "cartItems";
     }
 
-
-    // async add(productID, userID, quantity){
-    //     try{
-    //     const db = getDb();
-    //     const collection = db.collection(this.collection);
-    //     const id = this.getNextCounterValue(db);
-    //     await collection.insertOne(
-    //             {productID: new ObjectId(productID), userID: new ObjectId(userID), quantity}, //filter expression
-    //             {
-    //                 $setOnInsert:{
-    //                     _id: id
-    //                 }, //inserts/sets value only when document does not exist.
-    //                 $inc:{ //increment operator
-    //                     quantity: quantity
-    //                 }
-    //             }, 
-    //             {upsert: true} //upsert: if document exists, then update it, else create it. 
-    //             ) 
-
-    //     }catch(err){
-    //         console.log(err);
-    //         //throw new ApplicationError("Something went wrong with database", 500);
-    //     }
-    // }
-
     async add(productID, userID, quantity){
         try{
             const db = getDb();
