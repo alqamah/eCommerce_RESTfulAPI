@@ -53,8 +53,12 @@ export class ProductRepository {
       }
       if (catg){
         query.category = catg;
+        //using the $in operator when an array is passed in catg
+        //query.category = {$in: catg};
+        //or
+        //query = {...query, category: {$in: catg}}; 
       }
-      const products = await collection.find(query).toArray();
+      const products = await collection.find(query).project({name:1, price:1, rating:{$slice:1}}).toArray();
       return products;
     }catch(err){
       console.log(err);
@@ -138,6 +142,24 @@ export class ProductRepository {
     }
   }
   */
-  
+
+  async averagePricePerCatg(){
+    try{
+      const db = getDb();
+      
+      return await db.collection("products").aggregate([
+        {
+          //get avg price per catg
+          $group:{ //grouping based in the fields below
+            _id:"$category", //group by category
+            avgPrice:{$avg:"$price"} 
+          }
+        }
+      ]).toArray();
+
+    }catch(err){
+      console.log(err);
+    }
+  }
 }
     
