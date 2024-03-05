@@ -32,3 +32,14 @@
 {"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
 {"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
 {"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}
+{"level":"info","message":"/api/product/aggregate/countRatings - {\"productID\":\"65dc7aaa0a21d56c25f1313c\",\"quantity\":2}\n","service":"request-logging"}

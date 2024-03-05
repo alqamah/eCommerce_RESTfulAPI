@@ -36,8 +36,8 @@ router.get('/aggregate/averagePrice',(req,res)=>{
 router.get('/aggregate/averageRating',(req,res)=>{
     productController.averageRating(req,res);
 });
-// router.get('/aggregate/countRatings',(req,res)=>{
-//     productController.countRatings(req,res);
-// });
+router.get('/aggregate/countRatings',(req,res)=>{
+    productController.countRatings(req,res);
+});
 
 export default router;

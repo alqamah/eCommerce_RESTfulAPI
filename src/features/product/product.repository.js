@@ -180,21 +180,35 @@ export class ProductRepository {
     ]).toArray();
   }
 
-  // async countRatings(){
-  //   const db = getDb();
-  //   return await db.collection("products").aggregate([
-  //     // Project name of Products and Rating count
-  //     {
-  //       $unwind:"$ratings" //unwind the ratings array
-  //     },
-  //     {
-  //       $project:{
-  //         name:1, ratingsCount: {$size:"$ratings"}
-  //       }
-  //     }
+  async countRatings(){
+    const db = getDb();
+    return await db.collection("products").aggregate([
+      //Stage-1: Project name of Products and Rating count:
+      {
+        $project:{
+          _id:0,
+          name:1, 
+          ratingsCount: {
+            $cond:{
+              if:{$isArray:"$ratings"},
+              then:{$size:"$ratings"},
+              else:0
+            }
+          }
+        }
+      },
+      //Stage-2: Sort the ratings:
+      {
+        $sort:{ratingsCount:-1}
+      },
 
-  //   ]);
-  // }
+      //Stage-3: Limit to top 3 ratings:
+      {
+        $limit:3
+      }
+
+    ]).toArray();
+  }
 
 }
     

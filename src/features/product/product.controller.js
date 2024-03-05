@@ -90,15 +90,15 @@ export default class ProductController{
             console.log(err);
         }
     }
-    // async countRatings(req, res){
-    //     try{
-    //         const avg = await this.productRepository.countRatings();
-    //         if(avg)
-    //             return res.status(201).send(avg);
-    //         res.status(404).send("No matching products");
-    //     }catch(err){
-    //         console.log(err);
-    //     }
-    // }
+    async countRatings(req, res){
+        try{
+            const avg = await this.productRepository.countRatings();
+            if(avg)
+                return res.status(201).send(avg);
+            res.status(404).send("No matching products");
+        }catch(err){
+            console.log(err);
+        }
+    }
 
 }
