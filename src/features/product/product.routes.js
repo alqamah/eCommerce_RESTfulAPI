@@ -19,9 +19,7 @@ router.get('/', (req,res)=>{
 router.post('/', upload.single('imageUrl'),(req,res)=>{
     productController.addProduct(req,res);
 });
-router.get('/averagePrice',(req,res)=>{
-    productController.averagePrice(req,res);
-});
+
 router.get('/getone/:pid', (req,res)=>{
     productController.getOneProduct(req,res);
 });
@@ -32,5 +30,14 @@ router.post('/rating',(req,res)=>{
     productController.rateProduct(req,res);
 });
 
+router.get('/aggregate/averagePrice',(req,res)=>{
+    productController.averagePrice(req,res);
+});
+router.get('/aggregate/averageRating',(req,res)=>{
+    productController.averageRating(req,res);
+});
+// router.get('/aggregate/countRatings',(req,res)=>{
+//     productController.countRatings(req,res);
+// });
 
 export default router;

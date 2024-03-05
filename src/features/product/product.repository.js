@@ -146,7 +146,7 @@ export class ProductRepository {
   async averagePricePerCatg(){
     try{
       const db = getDb();
-      
+
       return await db.collection("products").aggregate([
         {
           //get avg price per catg
@@ -161,5 +161,40 @@ export class ProductRepository {
       console.log(err);
     }
   }
+
+  async averageRating(){
+    const db = getDb();
+    return await db.collection("products").aggregate([
+      //1. Create documents for ratings
+      {
+        $unwind:"$ratings" //unwind the ratings array
+      },
+      //2. Group ratings per product and get the average
+      {
+        $group:{
+          _id:"$name",
+          averageRating: { $avg: "$ratings.rating" }
+        }
+      }
+
+    ]).toArray();
+  }
+
+  // async countRatings(){
+  //   const db = getDb();
+  //   return await db.collection("products").aggregate([
+  //     // Project name of Products and Rating count
+  //     {
+  //       $unwind:"$ratings" //unwind the ratings array
+  //     },
+  //     {
+  //       $project:{
+  //         name:1, ratingsCount: {$size:"$ratings"}
+  //       }
+  //     }
+
+  //   ]);
+  // }
+
 }
     
