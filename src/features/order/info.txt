@@ -1,0 +1,11 @@
+Place Order
+
+1. Get cart items of the user, calculate the totalAmt
+2. Create a record for the Order
+3. Reduce the stocks (product quantity)
+4. Clear the cart
+
+5. Deduct payment (na)
+6. Inform the seller (na)
+
+ALL STEPS ARE ATOMIC IN : TRANSACTIONS

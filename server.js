@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import cartRouter from './src/features/cart/cartItems.routes.js';
 import ProductRouter from './src/features/product/product.routes.js';
 import UserRouter from './src/features/user/user.routes.js';
+import orderRouter from './src/features/order/order.router.js';
 //import loggerMiddleware from './src/middlewares/logger.middleware.js';
 import loggerMiddleware from './src/middlewares/winston-logger.middleware.js';
 
@@ -31,7 +32,7 @@ server.use(loggerMiddleware);
 server.use('/api/product',ProductRouter);
 server.use('/api/user',UserRouter);
 server.use('/api/cart',cartRouter);
-
+server.use('/api/order',orderRouter);
 
 
 // server.use('/',(req,res)=>{
