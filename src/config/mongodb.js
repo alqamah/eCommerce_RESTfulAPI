@@ -37,7 +37,7 @@ const createIndexes = async(db) =>{
     try{
         await db.collection("products").createIndex({ price:1});
         await db.collection("products").createIndex({name:1, category:-1});
-        console.log("price index created");
+        //console.log("price index created");
     }catch(err){
         console.log(err);
     }

@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { getDb } from "../../config/mongodb";
+import { getDb } from "../../config/mongodb.js";
 
 export default class OrderRepository{
     constructor(){
@@ -9,7 +9,8 @@ export default class OrderRepository{
     async placeOrder(userId){
 
         // 1. Get cartitems and calculate total amount.
-        await this.getTotalAmount(userId);
+        const amt = await this.getTotalAmount(userId);
+        return amt;
         // 2. Create an order record.
 
         // 3. Reduce the stock.
@@ -46,7 +47,9 @@ export default class OrderRepository{
                 }
             }
         ]).toArray();
+        //console.log(items);
         const finalTotalAmount = items.reduce((acc, item)=>acc+item.totalAmount, 0)
-        console.log(finalTotalAmount);
+        console.log("Total Amount:",finalTotalAmount);
+        return finalTotalAmount;
     }
 }

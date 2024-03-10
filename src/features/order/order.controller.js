@@ -9,8 +9,8 @@ export default class OrderController{
     async placeOrder(req, res, next){
         try{
         const userId = req.cookies.uid;
-            await this.orderRepository.placeOrder(userId);
-            res.status(201).send("Order is created");
+            const amt = await this.orderRepository.placeOrder(userId);
+            res.status(201).send(`Order placed successfully. Total amount: Rs.${amt}`);
         }catch(err){
             console.log(err);
             return res.status(200).send("Something went wrong");
