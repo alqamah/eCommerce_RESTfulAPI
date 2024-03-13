@@ -21,6 +21,10 @@ export const mongoDbConnection = () =>{
     })
 }   
 
+export const getClient = () =>{
+    return client;
+}
+
 export const getDb = () =>{
     return client.db("ecomdb");
 }

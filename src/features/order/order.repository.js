@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { getDb } from "../../config/mongodb.js";
+import { getClient, getDb } from "../../config/mongodb.js";
 import orderModel from "./order.model.js";
 
 export default class OrderRepository{
@@ -8,22 +8,25 @@ export default class OrderRepository{
     }
 
     async placeOrder(userId){
+        const client = getClient();
+        const session = client.startSession();
         const db = getDb();
+        session.startSession();
         // 1. Get cartitems and calculate total amount.
-        const items = await this.getTotalAmount(userId);
+        const items = await this.getTotalAmount(userId, session);
         const amt = items.reduce((acc, item)=>acc+item.totalAmount, 0);
         console.log("Total amount: ", amt);
         
         // 2. Create an order record.
         const order = new orderModel(userId, amt, new Date());
-        await db.collection(this.collection).insertOne(order);
+        await db.collection(this.collection).insertOne(order, {session});
         console.log("--order record created--");
         
         // 3. Reduce the stock.
         for (let item of items){
             await db.collection("products").updateOne(
                 {_id: new ObjectId(item.productID)},
-                {$inc:{stock: -item.quantity}}
+                {$inc:{stock: -item.quantity}}, {session}
             )  
         }
         console.log("--stock updated--");
@@ -39,9 +42,10 @@ export default class OrderRepository{
         console.log("Stock updation details:", updatedProductStockDetails);
 
         // 4. Clear the cart items.
+        await db.collection("cartItems").deleteMany({userID: new ObjectId(userId)}, {session});
     }
 
-    async getTotalAmount(userId){
+    async getTotalAmount(userId, session){
         const db = getDb();
         const items = await db.collection("cartItems").aggregate([
             // 1. Get cart items for the user
@@ -69,7 +73,7 @@ export default class OrderRepository{
                     }
                 }
             }
-        ]).toArray();
+        ], {session}).toArray();
 
         let orderDetails = [];
         
