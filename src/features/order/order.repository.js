@@ -8,6 +8,7 @@ export default class OrderRepository{
     }
 
     async placeOrder(userId){
+    try{
         const client = getClient();
         const session = client.startSession();
         const db = getDb();
@@ -43,6 +44,11 @@ export default class OrderRepository{
 
         // 4. Clear the cart items.
         await db.collection("cartItems").deleteMany({userID: new ObjectId(userId)}, {session});
+    }catch(err){
+        session.abortTransaction();
+        console.log(err);
+    }
+        
     }
 
     async getTotalAmount(userId, session){
