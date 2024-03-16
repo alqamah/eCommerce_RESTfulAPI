@@ -11,10 +11,9 @@ export default class OrderRepository{
     const client = getClient();
     const session = client.startSession();
     try{
-        const client = getClient();
-        const session = client.startSession();
+        
         const db = getDb();
-        session.startSession();
+        session.startTransaction();
         // 1. Get cartitems and calculate total amount.
         const items = await this.getTotalAmount(userId, session);
         const amt = items.reduce((acc, item)=>acc+item.totalAmount, 0);
@@ -46,6 +45,11 @@ export default class OrderRepository{
 
         // 4. Clear the cart items.
         await db.collection("cartItems").deleteMany({userID: new ObjectId(userId)}, {session});
+
+        // 5. Commit the transaction.
+        session.commitTransaction();
+        session.endSession();
+        
     }catch(err){
         session.abortTransaction();
         session.endSession();

@@ -14,6 +14,7 @@ import orderRouter from './src/features/order/order.router.js';
 import loggerMiddleware from './src/middlewares/winston-logger.middleware.js';
 
 import {mongoDbConnection} from './src/config/mongodb.js';
+import { connectUsingMongoose } from './src/config/mongooseconf.js';
 
 const server = express();
 dotenv.config(); // load the environment variables from the.env file
@@ -49,5 +50,6 @@ server.use('/api/order',orderRouter);
 
 server.listen(3000, ()=>{
     console.log('server listening on port 3000...');
-    mongoDbConnection();
+    //mongoDbConnection();
+    connectUsingMongoose();
 });
