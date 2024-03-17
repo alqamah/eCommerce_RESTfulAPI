@@ -1,25 +1,32 @@
-import { getDb } from "../../config/mongodb.js";
+import mongoose from "mongoose";
 
-export default class UserRepository { 
-    async signUp(newUser){
+//import the schema 
+import { userSchema } from "./user.schema.js";
+
+//create the model from the schema
+const UserModel = mongoose.model("User", userSchema);
+
+export default class UserRepository{
+    async signUp(user){
         try{
-            const db = getDb(); //gives access to the db
-            const usersCollection = db.collection("users"); //gets the users collection/table
-            await usersCollection.insertOne(newUser); //adds record to the users collection
+            //create instance of the Model
+            const newUser = new UserModel(user);
+            //save the user
+            await newUser.save();
             return newUser;
         }catch(err){
-            console.log(err);
+            throw err;
+            //console.log(err);
         }
     }
 
-    async findByEmail(email) {
+    async findByEmail(email, password){
         try{
-            const db = getDb();
-            const collection = db.collection("users");
-            const result = await collection.findOne({email});
-            return result;
-        } catch(err){
-            console.log(err);
+            const user = await UserModel.findOne({email});
+            return user;
+        }catch(err){
+            throw err;
         }
-      }
+    }
 }
+
