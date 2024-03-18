@@ -36,9 +36,9 @@ export default class UserController {
             const {email, password} = req.body;
             const result = await this.userRepository.findByEmail(email);
             if(!result)
-                return res.status(401).send("Invalid email or password");
+                return res.status(401).send("Invalid email");
             else{
-                const isPasswordMatch =  bcrypt.compare(password, result.password);
+                const isPasswordMatch = await bcrypt.compare(password, result.password);
                 if (!isPasswordMatch)
                     return res.status(401).send("Invalid email or password");
                 const token = jwt.sign(
@@ -53,6 +53,23 @@ export default class UserController {
         }catch(err){
             console.log(err);
         }
+    }
+
+    async resetPassword(req, res){
+        try{
+            const user = await this.userRepository.findByEmail(req.body.email);
+            if(!user)
+                return res.status(401).send("Email not found");
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
+            await this.userRepository.resetPassword(user._id, hashedPassword);
+            
+            return res.status(200).send("Password reset successfully");
+            
+        }catch(err){
+            console.log(err);
+            return res.status(400).send("error");
+        }
+
     }
 }
 
