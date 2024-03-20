@@ -16,4 +16,11 @@ export const connectUsingMongoose = async () => {
     }   
 };
 
-
+async function addCategories(){
+  const CategoryModel = mongoose.model("Category", categorySchema);
+  const categories = CategoryModel.find();
+  if(!categories || (await categories).length==0){
+      await CategoryModel.insertMany([{name:'Books'}, {name:'Clothing'},{name:'Electronics'}])
+  }
+  console.log("Categories added");
+}

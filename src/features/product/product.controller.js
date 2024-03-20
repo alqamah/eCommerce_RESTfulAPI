@@ -19,9 +19,9 @@ export default class ProductController{
 
     async addProduct(req, res){
         try{
-            const {name, desc, category, price, sizes} = req.body;
+            const {name, desc, categories, price, sizes} = req.body;
             const imageUrl= req.file.filename;
-            const newProduct = new ProductModel(name, desc, category, price, sizes.split(','), imageUrl);
+            const newProduct = new ProductModel(name, desc, categories, price, sizes.split(','), imageUrl);
             const record = await this.productRepository.addProduct(newProduct);
 		    res.status(201).send(record);
         }catch(err){

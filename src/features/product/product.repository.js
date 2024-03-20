@@ -1,6 +1,15 @@
 import { getDb } from "../../config/mongodb.js";
 import { ObjectId } from "mongodb";
 
+import mongoose from "mongoose";
+import { productSchema } from "./product.schema.js";
+import {reviewSchema} from "./review.schema.js";
+import {categorySchema} from "./category.schema.js";
+
+const ProductModel = mongoose.model("Product", productSchema);
+const ReviewModel = mongoose.model("Review", reviewSchema);
+const CategoryModel = mongoose.model("Category", categorySchema);
+
 export class ProductRepository {
   
    constructor() {
@@ -20,9 +29,15 @@ export class ProductRepository {
   
   async addProduct(product) {
     try{
-      const db = getDb();
-      const collection = db.collection("products");
-      return await collection.insertOne(product);
+      //1. create the new product
+      const newProduct = new ProductModel(product);
+      await newProduct.save();
+
+      //2. update the categories-table
+      await CategoryModel.updateMany(
+        {_id: {$in: product.categories}},
+        {$push: {products: product._id}}
+      );
     }catch(err){
       console.log(err);
     }
@@ -65,84 +80,37 @@ export class ProductRepository {
     }
   }
 
-  async rateProduct(userId, productId, rating) {
+  async rate(userID, productID, rating){
     try{
-      const db = getDb();
-      const collection = db.collection("products");
-      
-      const product = await collection.findOne({_id: new ObjectId(productId)});
-      if(product){
-        if(!product.ratings){ //if ratings [] does not exist
-          product.ratings = []; //then create the ratings array
-          product.ratings.push({userId: new ObjectId(userId), rating: rating}); //push the rating
+        // 1. Check if product exists
+        const productToUpdate = await ProductModel.findById(productID);
+        if(!productToUpdate){
+            throw new Error("Product not found")
         }
-        const ratingInd = product.ratings.findIndex((r) => r.userId == userId); //search for the rating of the user
-        if(ratingInd!= -1) //if user has already rated this product
-          product.ratings[ratingInd].rating = rating; //update the rating
-        else
-          product.ratings.push({userId: new ObjectId(userId), rating: rating}); //push the rating
-        const upd = await collection.updateOne({ //update the product in the database
-          _id: new ObjectId(productId)
-        },{
-          $set: {ratings: product.ratings}
-        });
-        if(upd.acknowledged)
-          return {
-            success:true,
-            msg:product
-          };
-        else
-          return {
-            success:false,
-            msg:"Error updating rating"
-          };
-      }
 
-      return {
-        success:false,
-        msg:"Product not found"
-      };
-      // const upd = await collection.updateOne({
-      //   _id: new ObjectId(productId)
-      // },{
-      //   //using push operator to append en element to an array: $push(element,value)
-      //   $push: {ratings: {userId: userId, rating: rating}}
-      // });
-     
+        // Find the existing review
+        const userReview = await ReviewModel.findOne({product: new ObjectId(productID), user: new ObjectId(userID)});
+        if(userReview){
+            userReview.rating = rating;
+            await userReview.save();
+        }else{
+            const newReview = new ReviewModel({
+                product: new ObjectId(productID),
+                user: new ObjectId(userID),
+                rating: rating
+            });
+            newReview.save();
+        }
+
     }catch(err){
-      console.log(err);
-      return {
-        success:false,
-        msg:"Error updating rating"
-      };
+        console.log(err);
+        throw new ApplicationError("Something went wrong with database", 500);    
     }
   }
 
-  /*
-  async rate(userId, productId, rate){
-    try{
-      const db = getDb();
-      const collection = db.collection("products");
-      //1. Removes the existing entry
-      await collection.updateOne({
-        _id: new ObjectId(productId)
-      },
-      {
-        $pull:{ratings:{userId: new ObjectId(userId)}}
-      })
-      //2. Pushes the new entry
-      await collection.updateOne({
-        _id: new ObjectId(productId)
-      },
-      {
-        $push:{rating:{userId:new ObjectId(userId), rating}}
-      })
-    }catch(err){
-      console.log(err);
-    }
-  }
-  */
 
+
+  
   async averagePricePerCatg(){
     try{
       const db = getDb();
@@ -209,6 +177,8 @@ export class ProductRepository {
 
     ]).toArray();
   }
+  
+  
 
 }
     
